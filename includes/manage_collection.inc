@@ -561,16 +561,30 @@ function islandora_basic_collection_validate_form(array $form_state) {
 
   if ($clicked_button == 'submit_all') {
     $source_collection = $form_state['collection'];
+    // Ask if a child of the source collection is the destination collection
     $query = <<<EOT
 PREFIX fedora-rels-ext: <info:fedora/fedora-system:def/relations-external#>
-SELECT ?object WHERE {
+ASK {
 ?object fedora-rels-ext:isMemberOfCollection <info:fedora/{$source_collection}> .
 FILTER (sameTerm(?object, <info:fedora/{$new_collection}>))
 }
 EOT;
     $connection = islandora_get_tuque_connection();
-    $num_results = $connection->repository->ri->countQuery($query, 'sparql');
-    return ($num_results <= 0);
+    $results = $connection->repository->ri->query($query, 'sparql');
+    // Only one result so recurse down to it.
+    $get_value = function($o) use ( &$get_value ) {
+      if (is_array($o)){
+        if (isset($o['value'])) {
+          return $o['value'];
+        }
+        else {
+          return $get_value(reset($o));
+        }
+      }
+    };
+    $result = $get_value($results);
+    // We proceed only if the answer to our ASK was "false"
+    return ($result == "false");
   }
   else {
     $children = array_keys(array_filter($form_state['values']['children']));
