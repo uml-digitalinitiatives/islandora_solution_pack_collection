@@ -40,7 +40,7 @@ before_install:
   - git clone -b 7.x git://github.com/Islandora/objective_forms.git
   - export ISLANDORA_DIR=$HOME/islandora
   - export TOOLS_DIR=$HOME/tools/
-  - $ISLANDORA_DIR/islandora/tests/scripts/travis_setup.sh
+  - $ISLANDORA_DIR/tests/scripts/travis_setup.sh
   - $ISLANDORA_DIR/.travis/phpcs_setup.sh
   - cd $HOME/drupal-*
   - ln -s $TRAVIS_BUILD_DIR sites/all/modules/islandora_solution_pack_collection
