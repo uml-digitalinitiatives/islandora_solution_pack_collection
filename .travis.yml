@@ -41,7 +41,7 @@ before_install:
   - export ISLANDORA_DIR=$HOME/islandora
   - export TOOLS_DIR=$HOME/tools/
   - $ISLANDORA_DIR/tests/scripts/travis_setup.sh
-  - $ISLANDORA_DIR/.travis/phpcs_setup.sh
+  - $TRAVIS_BUILD_DIR/.travis/phpcs_setup.sh
   - cd $HOME/drupal-*
   - ln -s $TRAVIS_BUILD_DIR sites/all/modules/islandora_solution_pack_collection
   - ln -s $HOME/islandora_xml_forms sites/all/modules/islandora_xml_forms
@@ -54,7 +54,7 @@ before_script:
 script:
   - ant -buildfile sites/all/modules/islandora_solution_pack_collection/build.xml lint
   - $ISLANDORA_DIR/tests/scripts/line_endings.sh sites/all/modules/islandora_solution_pack_collection
-  - $ISLANDORA_DIR/.travis/coder.sh
+  - $TRAVIS_BUILD_DIR/.travis/coder.sh
   - phpcpd --names *.module,*.inc,*.test sites/all/modules/islandora_solution_pack_collection
   - php scripts/run-tests.sh --php `phpenv which php` --url http://localhost:8081 --verbose "Islandora Basic Collection"
 notifications:
