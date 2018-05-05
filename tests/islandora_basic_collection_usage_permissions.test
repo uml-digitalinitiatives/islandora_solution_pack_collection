@@ -2,10 +2,15 @@
 
 /**
  * @file
+ * Usage tests.
+ *
  * Attempts to perform basic collection functions as a variety of users with
  * different permissions.
  */
 
+/**
+ * Tests various general permissions.
+ */
 class IslandoraBasicCollectionUsagePermissionsTestCase extends IslandoraCollectionWebTestCase {
 
   /**
@@ -49,7 +54,8 @@ class IslandoraBasicCollectionUsagePermissionsTestCase extends IslandoraCollecti
       ISLANDORA_VIEW_OBJECTS,
       ISLANDORA_BASIC_COLLECTION_CREATE_CHILD_COLLECTION,
       ISLANDORA_MANAGE_PROPERTIES,
-      ISLANDORA_INGEST));
+      ISLANDORA_INGEST,
+    ));
     $this->drupalLogin($user);
     $label = $this->randomName(16);
     $collection_pid = "islandora:" . $this->randomName(16);
@@ -76,7 +82,8 @@ class IslandoraBasicCollectionUsagePermissionsTestCase extends IslandoraCollecti
     $user = $this->drupalCreateUser(array(
       ISLANDORA_PURGE,
       ISLANDORA_MANAGE_PROPERTIES,
-      ISLANDORA_VIEW_OBJECTS));
+      ISLANDORA_VIEW_OBJECTS,
+    ));
     $this->drupalLogin($user);
     $this->deleteTestCollection($collection_pid);
 
@@ -86,4 +93,5 @@ class IslandoraBasicCollectionUsagePermissionsTestCase extends IslandoraCollecti
       $this->pass(t('Deleted collection %collection by force.', array('%collection' => $collection_pid)));
     }
   }
+
 }

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * This file contains all theme and preprocess functions
+ * This file contains all theme and preprocess functions.
  */
 
 /**
@@ -29,7 +29,7 @@ function template_preprocess_islandora_basic_collection_wrapper(&$variables) {
   $variables['islandora_dublin_core'] = isset($dc_object) ? $dc_object : NULL;
   $variables['dc_array'] = isset($dc_object) ? $dc_object->asArray() : array();
   $variables['islandora_object_label'] = $islandora_object->label;
-  $variables['display_metadata'] = variable_get('islandora_collection_metadata_display', FALSE);
+  $variables['display_metadata'] = variable_get('islandora_basic_collection_metadata_display', FALSE);
   if ($variables['display_metadata']) {
     drupal_add_js('misc/form.js');
     drupal_add_js('misc/collapse.js');
@@ -43,7 +43,6 @@ function template_preprocess_islandora_basic_collection_wrapper(&$variables) {
   pager_default_initialize($total_count, $page_size);
   $variables['collection_pager'] = theme('pager', array('quantity' => 10));
   $display = (empty($_GET['display'])) ? variable_get('islandora_basic_collection_default_view', 'grid') : $_GET['display'];
-  $link_text = (empty($_GET['display'])) ? 'grid' : $_GET['display'];
   $query_params = drupal_get_query_parameters($_GET);
 
   $query_params['display'] = 'list';
@@ -68,7 +67,7 @@ function template_preprocess_islandora_basic_collection_wrapper(&$variables) {
     $collection_content = theme('islandora_basic_collection_grid', array(
       'islandora_object' => $islandora_object,
       'collection_results' => $results,
-      )
+    )
     );
   }
   else {
@@ -96,7 +95,7 @@ function template_preprocess_islandora_basic_collection_wrapper(&$variables) {
  *
  * @ingroup themeable
  */
-function theme_islandora_basic_collection_metadata_table_drag_components($vars) {
+function theme_islandora_basic_collection_metadata_table_drag_components(array $vars) {
   $element = $vars['element'];
   $clean_id = drupal_html_id('islandora_basic_collection_meta_page_element_table');
   drupal_add_tabledrag($clean_id, 'order', 'sibling', 'item-row-weight');
@@ -139,10 +138,7 @@ function template_preprocess_islandora_basic_collection(&$variables) {
   catch (Exception $e) {
     drupal_set_message(t('Error retrieving object %s %t', array('%s' => $islandora_object->id, '%t' => $e->getMessage())), 'error', FALSE);
   }
-  $page_number = (empty($_GET['page'])) ? 0 : $_GET['page'];
-  $page_size = (empty($_GET['pagesize'])) ? variable_get('islandora_basic_collection_page_size', '12') : $_GET['pagesize'];
   $results = $variables['collection_results'];
-  $total_count = count($results);
   $variables['islandora_dublin_core'] = isset($dc_object) ? $dc_object : array();
   $variables['islandora_object_label'] = $islandora_object->label;
   $display = (empty($_GET['display'])) ? 'list' : $_GET['display'];
@@ -156,21 +152,24 @@ function template_preprocess_islandora_basic_collection(&$variables) {
     $full_size_url = url("islandora/object/{$islandora_object->id}/datastram/OBJ/view");
     $params = array(
       'title' => $islandora_object->label,
-      'path' => $full_size_url);
+      'path' => $full_size_url,
+    );
     $variables['islandora_full_img'] = theme('image', $params);
   }
   if (isset($islandora_object['TN'])) {
     $full_size_url = url("islandora/objects/{$islandora_object->id}/datastream/TN/view");
     $params = array(
       'title' => $islandora_object->label,
-      'path' => $full_size_url);
+      'path' => $full_size_url,
+    );
     $variables['islandora_thumbnail_img'] = theme('image', $params);
   }
   if (isset($islandora_object['MEDIUM_SIZE'])) {
     $full_size_url = url("islandora/object/{$islandora_object->id}/datastream/MEDIUM_SIZE/view");
     $params = array(
       'title' => $islandora_object->label,
-      'path' => $full_size_url);
+      'path' => $full_size_url,
+    );
     $variables['islandora_medium_img'] = theme('params', $params);
   }
 
@@ -236,7 +235,7 @@ function theme_islandora_basic_collection_policy_management_table(array $variabl
       $class = "collection_policy_table_${key}";
       $columns[] = array(
         'data' => drupal_render($column_element),
-        'class' => isset($cell_element['#attributes']['class']) ? $column_element['#attributes']['class'] : $class,
+        'class' => isset($column_element['#attributes']['class']) ? $column_element['#attributes']['class'] : $class,
       );
     }
     $rows[] = $columns;

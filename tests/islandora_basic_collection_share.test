@@ -5,7 +5,10 @@
  * Attempts to share a collection object.
  */
 
-class IslandoraShareCollectionTestCase extends IslandoraCollectionWebTestCase {
+/**
+ * Test share a collection.
+ */
+class IslandoraBasicCollectionShareCollectionTestCase extends IslandoraCollectionWebTestCase {
 
   /**
    * Get test information.
@@ -82,4 +85,5 @@ class IslandoraShareCollectionTestCase extends IslandoraCollectionWebTestCase {
     $this->deleteTestCollection($collection_1);
     $this->deleteTestCollection($collection_2);
   }
+
 }

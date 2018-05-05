@@ -8,8 +8,6 @@
 /**
  * Converts given model descriptions into Drupal form select element #options.
  *
- * @see islandora_get_content_models()
- *
  * @param array $content_models
  *   A list of content models as returned by islandora_get_content_models().
  *
@@ -18,9 +16,11 @@
  *   element options:
  *   - pid: The PID of the content model
  *     - label: The label to display to the user.
+ *
+ * @see islandora_get_content_models()
  */
 function islandora_basic_collection_get_content_models_as_form_options(array $content_models) {
-  $map_content_models_to_options = function($o) {
+  $map_content_models_to_options = function ($o) {
     $label = isset($o['label']) ? $o['label'] : $o['name'];
     return format_string('!pid ~ !label', array(
       '!pid' => $o['pid'],
@@ -35,8 +35,6 @@ function islandora_basic_collection_get_content_models_as_form_options(array $co
  *
  * Ignores the given collection.
  *
- * @see islandora_get_collections()
- *
  * @param AbstractObject $object
  *   A collection object to ignore.
  *
@@ -45,9 +43,11 @@ function islandora_basic_collection_get_content_models_as_form_options(array $co
  *   element options:
  *   - pid: The PID of the collection object.
  *     - label: The label to display to the user.
+ *
+ * @see islandora_get_collections()
  */
 function islandora_basic_collection_get_other_collections_as_form_options(AbstractObject $object) {
-  $map_options = function($o) {
+  $map_options = function ($o) {
     return filter_xss($o['label']);
   };
   $options = array_map($map_options, islandora_basic_collection_get_collections());
@@ -120,7 +120,10 @@ function islandora_basic_collection_get_children_select_table_form_element(Abstr
         'data' => array(
           '#type' => 'link',
           '#title' => $label,
-          '#href' => "islandora/object/{$pid}")));
+          '#href' => "islandora/object/{$pid}",
+        ),
+      ),
+    );
   }
   $pager = theme('pager', array('quantity' => $limit, 'element' => $pager_options['element']));
   $pager = islandora_basic_collection_append_fragment_to_pager_url($pager, $pager_options['fragment']);
@@ -129,7 +132,8 @@ function islandora_basic_collection_get_children_select_table_form_element(Abstr
     '#header' => array(
       'label' => array('data' => t('Label')),
       'owner' => array('data' => t('Owner')),
-      'date_modified' => array('data' => t('Date Modified'))),
+      'date_modified' => array('data' => t('Date Modified')),
+    ),
     '#options' => $rows,
     '#empty' => t('Collection is empty.'),
     '#prefix' => $pager,
@@ -150,7 +154,7 @@ function islandora_basic_collection_get_parent_pids(AbstractObject $object) {
   $results = array_merge(
       $object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOfCollection'),
       $object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf'));
-  $map_results = function($o) {
+  $map_results = function ($o) {
     return $o['object']['value'];
   };
   $collections = array_map($map_results, $results);

@@ -5,18 +5,17 @@
  * Shares an object that is not a collection to an additional collection.
  */
 
-
 /**
  * Form setup.
  *
  * @param array $form
- *   Form variable
+ *   Form variable.
  * @param array $form_state
  *   The context of this form.
- * @param object $islandora_object
- *   The object to perform the operation on
+ * @param AbstractObject $islandora_object
+ *   The object to perform the operation on.
  */
-function islandora_basic_collection_migrate_item_form($form, &$form_state, $islandora_object) {
+function islandora_basic_collection_migrate_item_form(array $form, array &$form_state, AbstractObject $islandora_object) {
   $form['description'] = array(
     '#type' => 'item',
     '#title' => t('Migrate this item'),
@@ -34,16 +33,15 @@ function islandora_basic_collection_migrate_item_form($form, &$form_state, $isla
   return $form;
 }
 
-
 /**
  * Validates the form.
  *
  * @param array $form
- *   Form variable
+ *   Form variable.
  * @param array $form_state
  *   The context of this form.
  */
-function islandora_basic_collection_migrate_item_form_validate($form, &$form_state) {
+function islandora_basic_collection_migrate_item_form_validate(array $form, array &$form_state) {
   $new_collection = islandora_object_load($form_state['values']['new_collection_name']);
   $collection_models = islandora_basic_collection_get_collection_content_models();
   $is_a_collection = FALSE;
@@ -66,11 +64,11 @@ function islandora_basic_collection_migrate_item_form_validate($form, &$form_sta
  * Processes the form and migrates the objects.
  *
  * @param array $form
- *   Form variable
+ *   Form variable.
  * @param array $form_state
  *   The context of this form.
  */
-function islandora_basic_collection_migrate_item_form_submit($form, &$form_state) {
+function islandora_basic_collection_migrate_item_form_submit(array $form, array &$form_state) {
   module_load_include('inc', 'islandora_basic_collection', 'includes/utilities');
   $object = islandora_object_load($form_state['basic_collection_migrate']);
   $new_collection = islandora_object_load($form_state['values']['new_collection_name']);
@@ -82,8 +80,9 @@ function islandora_basic_collection_migrate_item_form_submit($form, &$form_state
     }
     islandora_basic_collection_add_to_collection($object, $new_collection);
     $message = t('The object @object has been added to @collection', array(
-                 '@object' => $object->label,
-                 '@collection' => $new_collection->label));
+      '@object' => $object->label,
+      '@collection' => $new_collection->label,
+    ));
     drupal_set_message($message);
 
   }

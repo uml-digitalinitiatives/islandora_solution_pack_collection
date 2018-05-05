@@ -86,11 +86,11 @@ function islandora_basic_collection_admin(array $form, array &$form_state) {
     'metadata_display_fieldset' => array(
       '#type' => 'fieldset',
       '#title' => t('Metadata display'),
-      'islandora_collection_metadata_display' => array(
+      'islandora_basic_collection_metadata_display' => array(
         '#type' => 'checkbox',
         '#title' => t('Display object metadata'),
         '#description' => t('Display object metadata below the collection display.'),
-        '#default_value' => variable_get('islandora_collection_metadata_display', FALSE),
+        '#default_value' => variable_get('islandora_basic_collection_metadata_display', FALSE),
       ),
     ),
   );
@@ -125,7 +125,7 @@ function islandora_basic_collection_admin(array $form, array &$form_state) {
     '#states' => array(
       'visible' => array(
         ':input[name="islandora_basic_collection_display_backend"]' => array('!value' => ISLANDORA_BASIC_COLLECTION_LEGACY_BACKEND),
-        ':input[name="islandora_collection_metadata_display"]' => array('checked' => TRUE),
+        ':input[name="islandora_basic_collection_metadata_display"]' => array('checked' => TRUE),
       ),
     ),
   );

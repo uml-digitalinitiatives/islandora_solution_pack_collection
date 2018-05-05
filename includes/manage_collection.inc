@@ -28,7 +28,8 @@ function islandora_basic_collection_manage_object(AbstractObject $object) {
   );
   $data = islandora_invoke_hook_list(ISLANDORA_BASIC_COLLECTION_BUILD_MANAGE_OBJECT_HOOK, $object->models, array(
     $return_form,
-    $object)
+    $object,
+  )
   );
   $data['manage_collection_object']['#type'] = 'vertical_tabs';
   return $data;
@@ -324,13 +325,12 @@ function islandora_basic_collection_policy_management_form(array $form, array &$
  */
 function islandora_basic_collection_policy_management_form_submit(array $form, array &$form_state) {
   $collection = $form_state['collection'];
-  $filter_selected = function($o) {
+  $filter_selected = function ($o) {
     return $o['selected'];
   };
   $selected = array_filter($form_state['values']['table']['rows'], $filter_selected);
   $policy = CollectionPolicy::emptyPolicy();
   foreach ($selected as $pid => $properties) {
-    $content_model = islandora_object_load($pid);
     $policy->addContentModel($pid, $properties['prompt'], $properties['namespace']);
   }
   if (!isset($collection['COLLECTION_POLICY'])) {

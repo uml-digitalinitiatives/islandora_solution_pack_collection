@@ -2,9 +2,12 @@
 
 /**
  * @file
- * Attempts to create and remove a randomly generated image collection
+ * Attempts to create and remove a randomly generated image collection.
  */
 
+/**
+ * Tests ingesting a collection.
+ */
 class IslandoraBasicCollectionIngestTestCase extends IslandoraCollectionWebTestCase {
 
   /**
@@ -48,4 +51,5 @@ class IslandoraBasicCollectionIngestTestCase extends IslandoraCollectionWebTestC
     $object = islandora_object_load($pid);
     $this->assertTrue($object, "Collection '$pid' was created.", 'Islandora');
   }
+
 }

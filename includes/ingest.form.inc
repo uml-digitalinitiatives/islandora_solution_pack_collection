@@ -28,13 +28,13 @@ function islandora_basic_collection_ingest_action(AbstractObject $collection) {
 /**
  * Generates an ingest configuration from the given collection object.
  *
- * @see islandora_ingest_form()
- *
  * @param AbstractObject $collection
  *   A collection object to generate the configuration from.
  *
  * @return array
  *   An ingest configuration array as defined by islandora_ingest_form().
+ *
+ * @see islandora_ingest_form()
  */
 function islandora_basic_collection_get_ingest_configuration(AbstractObject $collection) {
   $is_collection_object = in_array('islandora:collectionCModel', $collection->models);

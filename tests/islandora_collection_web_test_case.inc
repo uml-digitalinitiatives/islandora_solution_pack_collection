@@ -5,7 +5,10 @@
  * Test class for extending classes that use islandora_basic_collection.
  */
 
-class IslandoraCollectionWebTestCase extends IslandoraWebTestCase {
+/**
+ * Web interface tests.
+ */
+class IslandoraBasicCollectionWebTestCase extends IslandoraWebTestCase {
 
   /**
    * Adds a child collection with the given params to the top-level collection.
@@ -13,11 +16,11 @@ class IslandoraCollectionWebTestCase extends IslandoraWebTestCase {
    * Use in lieu of throwing test objects into a standard collection.
    *
    * @param string $label
-   *   The label that should be assigned to the collection
+   *   The label that should be assigned to the collection.
    * @param string|array $models
-   *   The collection's content models; also accepts a single-model string
+   *   The collection's content models; also accepts a single-model string.
    * @param string $pid
-   *   The PID that should be assigned to the collection
+   *   The PID that should be assigned to the collection.
    *
    * @see IslandoraWebTestCase::deleteRootTestCollection()
    */
@@ -71,7 +74,7 @@ class IslandoraCollectionWebTestCase extends IslandoraWebTestCase {
    * Deletes a child collection from the root collection directly via PID.
    *
    * @param string $pid
-   *   The PID of the collection to be deleted
+   *   The PID of the collection to be deleted.
    */
   public function deleteTestCollection($pid) {
     $path = 'islandora/object/' . $pid . '/delete';

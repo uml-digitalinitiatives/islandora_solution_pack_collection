@@ -74,6 +74,7 @@ function islandora_basic_collection_menu() {
     'islandora/collection/count_ajax' => array(
       'title' => 'AJAX callback to get count',
       'page callback' => 'islandora_basic_collection_object_count_callback',
+      // Ajax request allowed from everywhere.
       'access callback' => TRUE,
       'type' => MENU_CALLBACK,
       'file' => 'includes/blocks.inc',
@@ -182,7 +183,7 @@ function islandora_basic_collection_islandora_required_objects(IslandoraTuque $c
  * @return bool
  *   TRUE if it should be shown, and FALSE if it should not be shown.
  */
-function islandora_basic_collection_manage_access($object = NULL) {
+function islandora_basic_collection_manage_access(AbstractObject $object = NULL) {
   $collection_models = islandora_basic_collection_get_collection_content_models();
   $is_a_collection = count(array_intersect($collection_models, $object->models)) > 0;
 
@@ -230,7 +231,7 @@ function islandora_basic_collection_theme($existing, $type, $theme, $path) {
 /**
  * Implements hook_CMODEL_PID_islandora_view_object().
  */
-function islandora_basic_collection_islandora_collectionCModel_islandora_view_object(AbstractObject $object) {
+function islandora_basic_collection_islandora_collectioncmodel_islandora_view_object(AbstractObject $object) {
   /* completely disable view of object */
   $disable = variable_get('islandora_basic_collection_disable_display_generation', FALSE);
   if ($disable) {
@@ -281,7 +282,7 @@ function islandora_basic_collection_islandora_collectionCModel_islandora_view_ob
   }
 
   // Add collection description metadata.
-  if (variable_get('islandora_collection_metadata_display', FALSE)) {
+  if (variable_get('islandora_basic_collection_metadata_display', FALSE)) {
     module_load_include('inc', 'islandora', 'includes/metadata');
 
     $to_return['description'] = array(
@@ -416,7 +417,7 @@ function islandora_basic_collection_xml_form_builder_form_associations() {
 /**
  * Implements hook_CMODEL_PID_islandora_view_object().
  */
-function islandora_basic_collection_islandora_collectionCModel_islandora_overview_object(AbstractObject $object) {
+function islandora_basic_collection_islandora_collectioncmodel_islandora_overview_object(AbstractObject $object) {
   $rows = array();
   $model_query = islandora_basic_collection_get_query_info(array(
     'object' => $object,
@@ -458,10 +459,11 @@ function islandora_basic_collection_islandora_collectionCModel_islandora_overvie
         'type' => array('data' => t('Type')),
       ),
       '#rows' => $rows,
-      '#empty' => t('Collection is empty.')),
+      '#empty' => t('Collection is empty.'),
+    ),
   );
   if (!$disable_count) {
-    list($total_count, $all_results) = islandora_basic_collection_get_member_objects($object, 0, 0);
+    list($total_count,) = islandora_basic_collection_get_member_objects($object, 0, 0);
     $content['total'] = array('#markup' => t('Total members: %total', array('%total' => $total_count)));
     $content['table']['#header']['count'] = array('data' => t('Count'));
   }
@@ -476,7 +478,7 @@ function islandora_basic_collection_islandora_collectionCModel_islandora_overvie
 function islandora_basic_collection_islandora_overview_object(AbstractObject $object) {
   module_load_include('inc', 'islandora_basic_collection', 'includes/utilities');
   if (!in_array('islandora:collectionCModel', $object->models)) {
-    $map_to_row = function($o) {
+    $map_to_row = function ($o) {
       $o = islandora_object_load($o);
       return ($o ?
         array(l($o->label, "islandora/object/{$o->id}")) :
@@ -486,9 +488,10 @@ function islandora_basic_collection_islandora_overview_object(AbstractObject $ob
     $rows = array_map($map_to_row, $pids);
     $rows = array_filter($rows);
     $table = theme('table', array(
-               'header' => array(t('Parent Collections')),
-               'rows' => $rows,
-               'empty' => t('No parent collections')));
+      'header' => array(t('Parent Collections')),
+      'rows' => $rows,
+      'empty' => t('No parent collections'),
+    ));
     return array('collection' => $table);
   }
 }

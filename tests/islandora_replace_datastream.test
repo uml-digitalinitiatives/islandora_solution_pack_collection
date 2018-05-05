@@ -5,7 +5,10 @@
  * Attempts to replace the thumbnail datastream of a collection.
  */
 
-class IslandoraReplaceDatastreamTestCase extends IslandoraCollectionWebTestCase {
+/**
+ * Test replace a datastream on a collection.
+ */
+class IslandoraBasicCollectionReplaceDatastreamTestCase extends IslandoraCollectionWebTestCase {
 
   /**
    * Get test information.
@@ -69,4 +72,5 @@ class IslandoraReplaceDatastreamTestCase extends IslandoraCollectionWebTestCase 
     $this->assertNoText('PNG', 'PNG thumbnail correctly replaced with JPG', 'Islandora');
     $this->deleteTestCollection($collectionpid);
   }
+
 }

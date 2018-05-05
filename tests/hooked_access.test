@@ -11,6 +11,9 @@
  * To make sense of these tests reference islandora_hooked_access_test.module.
  */
 
+/**
+ * Test access permission hooks.
+ */
 class IslandoraBasicCollectionHookedAccessTestCase extends IslandoraWebTestCase {
 
   /**
@@ -129,4 +132,5 @@ class IslandoraBasicCollectionHookedAccessTestCase extends IslandoraWebTestCase 
       }
     }
   }
+
 }

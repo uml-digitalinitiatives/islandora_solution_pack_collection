@@ -29,7 +29,7 @@ function islandora_basic_collection_thumbs_batch($collection) {
  * @param array $context
  *   Context array for this batch. Used to tell batch when we're finished.
  */
-function islandora_basic_collection_thumbs_batch_operation($collection, &$context) {
+function islandora_basic_collection_thumbs_batch_operation($collection, array &$context) {
   module_load_include('inc', 'islandora', 'includes/utilities');
   $tuque = islandora_get_tuque_connection();
   $sandbox = &$context['sandbox'];
@@ -51,7 +51,7 @@ function islandora_basic_collection_thumbs_batch_operation($collection, &$contex
 
   // If not a retry check TN and push children collections to stack.
   if (!$retry) {
-    $map_results = function($o) {
+    $map_results = function ($o) {
       return $o['child']['value'];
     };
     $child_collections_query = <<<EOQ

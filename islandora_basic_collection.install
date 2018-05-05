@@ -48,3 +48,16 @@ function islandora_basic_collection_update_7001() {
     variable_set('islandora_basic_collection_page_size', '12');
   }
 }
+
+/**
+ * Fix incorrect variable name.
+ *
+ * Migrate variable islandora_collection_metadata_display to
+ * islandora_basic_collection_metadata_display.
+ */
+function islandora_basic_collection_update_7002() {
+  if (variable_get('islandora_collection_metadata_display', FALSE) === TRUE) {
+    variable_set('islandora_basic_collection_metadata_display', TRUE);
+  }
+  variable_del('islandora_collection_metadata_display');
+}

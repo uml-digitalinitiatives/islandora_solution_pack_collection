@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Provides block functionality for the basic collection module.
@@ -164,7 +165,6 @@ function islandora_basic_collection_collection_listing_content() {
   return drupal_render($block);
 }
 
-
 /**
  * Filters out collections that only contain included content models.
  *
@@ -176,7 +176,7 @@ function islandora_basic_collection_collection_listing_content() {
  * @return array
  *   An array of collections to be used.
  */
-function islandora_basic_collection_filter_collection_by_cmodel($collections, $models) {
+function islandora_basic_collection_filter_collection_by_cmodel(array $collections, array $models) {
   $collection_filter = function ($collection) use ($models) {
     $tuque = islandora_get_tuque_connection();
     $models_query = <<<EOQ

@@ -3,13 +3,12 @@
 /**
  * @file
  * Defines CollectionPolicy class to process the COLLECTION_POLICY datastream.
- * As defined here http://syn.lib.umanitoba.ca/collection_policy.xsd.
  */
 
 /**
- * Collection Policy
+ * Collection Policy.
  */
-class CollectionPolicy {
+class IslandoraBasicCollectionPolicy {
 
   /**
    * The Collection Policy xml file.
@@ -24,7 +23,7 @@ class CollectionPolicy {
    * @return CollectionPolicy
    *   An empty CollectionPolicy.
    */
-  static public function emptyPolicy() {
+  public static function emptyPolicy() {
     $xml = <<<EOT
 <?xml version="1.0" encoding="UTF-8"?>
 <collection_policy xmlns="http://www.islandora.ca" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="" xsi:schemaLocation="http://www.islandora.ca http://syn.lib.umanitoba.ca/collection_policy.xsd">
@@ -111,7 +110,6 @@ EOT;
    */
   public function addContentModel($pid, $name, $namespace) {
     $content_models_element = $this->xml->getElementsByTagName('content_models');
-    $content_model_element = $content_models_element->item(0)->getElementsByTagName('content_model');
     $content_model_element = $this->xml->createElement('content_model');
     $content_model_element->setAttribute('name', $name);
     $content_model_element->setAttribute('dsid', variable_get('Islandora_Content_Model_DSID', ''));
@@ -145,7 +143,6 @@ EOT;
 
         if ($found !== FALSE && $models->length > 0) {
           $content_models_element->item(0)->removeChild($found);
-          $ret = TRUE;
         }
         $count++;
       }
@@ -157,7 +154,8 @@ EOT;
   /**
    * Dump out the XML for this collection policy.
    */
-  public function getXML() {
+  public function getXml() {
     return $this->xml->saveXML();
   }
+
 }

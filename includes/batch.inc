@@ -49,8 +49,9 @@ function islandora_basic_collection_batch_finished($success, $results, $operatio
     // Generic Error Message.
     $error_operation = reset($operations);
     $message = t('An error occurred while processing %error_operation with arguments: @arguments', array(
-                 '%error_operation' => $error_operation[0],
-                 '@arguments' => print_r($error_operation[1], TRUE)));
+      '%error_operation' => $error_operation[0],
+      '@arguments' => print_r($error_operation[1], TRUE),
+    ));
     drupal_set_message($message, 'error');
   }
 }
@@ -158,7 +159,7 @@ function islandora_basic_collection_delete_children_batch_operation(AbstractObje
  * @param array $context
  *   The batch context.
  */
-function islandora_basic_collection_delete_all_children_batch_operation(AbstractObject $collection, &$context) {
+function islandora_basic_collection_delete_all_children_batch_operation(AbstractObject $collection, array &$context) {
   $query_info = islandora_basic_collection_get_query_info(array(
     'object' => $collection,
   ), 'manage');
@@ -177,7 +178,7 @@ function islandora_basic_collection_delete_all_children_batch_operation(Abstract
 
   $results = islandora_basic_collection_get_member_objects($collection, 0, 10, 'manage');
   if ($results) {
-    list($count, $members) = $results;
+    list(, $members) = $results;
     foreach ($members as $result) {
       $child = $result['object']['value'];
       if ($child && $child = islandora_object_load($child)) {
@@ -231,7 +232,7 @@ function islandora_basic_collection_delete_all_children_batch_operation(Abstract
  * @return array
  *   The batch definition.
  */
-function islandora_basic_collection_migrate_children_batch(AbstractObject $source, AbstractObject $destination, $children = NULL) {
+function islandora_basic_collection_migrate_children_batch(AbstractObject $source, AbstractObject $destination, array $children = NULL) {
   $batch = array(
     'finished' => 'islandora_basic_collection_batch_finished',
     'progress_message' => t('Time elapsed: @elapsed <br/>Estimated time remaining @estimate.'),
@@ -321,7 +322,7 @@ function islandora_basic_collection_migrate_children_batch_operation(AbstractObj
  * @return array
  *   The batch definition.
  */
-function islandora_basic_collection_share_children_batch(AbstractObject $source, AbstractObject $destination, $children = NULL) {
+function islandora_basic_collection_share_children_batch(AbstractObject $source, AbstractObject $destination, array $children = NULL) {
   $batch = array(
     'finished' => 'islandora_basic_collection_batch_finished',
     'progress_message' => t('Time elapsed: @elapsed <br/>Estimated time remaining @estimate.'),
@@ -366,6 +367,7 @@ function islandora_basic_collection_share_children_batch(AbstractObject $source,
 
   return $batch;
 }
+
 /**
  * Shares given children from the current collection to the new collection.
  *
@@ -378,7 +380,7 @@ function islandora_basic_collection_share_children_batch(AbstractObject $source,
  * @param array $context
  *   The batch context.
  */
-function islandora_basic_collection_share_children_batch_operation(AbstractObject $source, AbstractObject $destination, array $children, &$context) {
+function islandora_basic_collection_share_children_batch_operation(AbstractObject $source, AbstractObject $destination, array $children, array &$context) {
   $child = islandora_basic_collection_start_operation($children, $context);
   if ($child && $child = islandora_object_load($child)) {
     islandora_basic_collection_add_to_collection($child, $destination);
@@ -407,7 +409,7 @@ function islandora_basic_collection_share_children_batch_operation(AbstractObjec
  * @param array $context
  *   The batch context.
  */
-function islandora_basic_collection_migrate_all_children_batch_operation(AbstractObject $source, AbstractObject $destination, &$context) {
+function islandora_basic_collection_migrate_all_children_batch_operation(AbstractObject $source, AbstractObject $destination, array &$context) {
   $results = islandora_basic_collection_get_member_objects($source, 0, 10, 'manage');
   if ($results) {
     list($count, $members) = $results;
@@ -427,6 +429,7 @@ function islandora_basic_collection_migrate_all_children_batch_operation(Abstrac
   $context['finished'] = $context['sandbox']['current'] / $context['sandbox']['total_count'];
   $context['message'] = 'Migrated ' . $context['sandbox']['current'] . ' children.';
 }
+
 /**
  * Shares all children from the current collection to the new collection.
  *
@@ -437,7 +440,7 @@ function islandora_basic_collection_migrate_all_children_batch_operation(Abstrac
  * @param array $context
  *   The batch context.
  */
-function islandora_basic_collection_share_all_children_batch_operation(AbstractObject $source, AbstractObject $destination, &$context) {
+function islandora_basic_collection_share_all_children_batch_operation(AbstractObject $source, AbstractObject $destination, array &$context) {
   $results = islandora_basic_collection_get_member_objects($source, $context['sandbox']['page'], 10, 'manage');
   $context['sandbox']['page']++;
   if ($results) {
@@ -457,8 +460,8 @@ function islandora_basic_collection_share_all_children_batch_operation(AbstractO
 
   $context['finished'] = $context['sandbox']['current'] / $context['sandbox']['total_count'];
   $context['message'] = t('Shared @current_num children from @source to @destination', array(
-                        '@current_num' => $context['sandbox']['current'],
-                        '@source' => $source->label,
-                        '@destination' => $destination->label,
-                        ));
+    '@current_num' => $context['sandbox']['current'],
+    '@source' => $source->label,
+    '@destination' => $destination->label,
+  ));
 }

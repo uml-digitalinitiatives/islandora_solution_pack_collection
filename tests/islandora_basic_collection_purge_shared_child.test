@@ -2,11 +2,13 @@
 
 /**
  * @file
- * Attempts to create and remove a rels entry between a shared object and two
- * collections.
+ * Purging shared object tests.
  */
 
-class IslandoraPurgeShareCollectionTestCase extends IslandoraCollectionWebTestCase {
+/**
+ * Tests removing a rels entry between a shared object and two collections.
+ */
+class IslandoraBasicCollectionPurgeShareCollectionTestCase extends IslandoraCollectionWebTestCase {
 
   /**
    * Get test information.
@@ -130,4 +132,5 @@ class IslandoraPurgeShareCollectionTestCase extends IslandoraCollectionWebTestCa
     }
     return $objects;
   }
+
 }

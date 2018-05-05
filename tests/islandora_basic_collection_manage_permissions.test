@@ -5,6 +5,9 @@
  * Tests permissions in the islandora basic collection.
  */
 
+/**
+ * Test collection manage permissions.
+ */
 class IslandoraBasicCollectionPermissionsTestCase extends IslandoraWebTestCase {
 
   /**

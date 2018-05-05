@@ -2,7 +2,7 @@
 
 /**
  * @file
- * islandora-basic-collection.tpl.php
+ * Islandora-basic-collection.tpl.php.
  *
  * @TODO: needs documentation about file and variables
  */

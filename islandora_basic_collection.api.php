@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Hook documentation
+ * Hook documentation.
  */
 
 /**
@@ -87,7 +87,7 @@ function hook_islandora_basic_collection_get_query_filters() {
  * @param AbstractObject $object
  *   Form object.
  */
-function hook_islandora_basic_collection_build_manage_object($form_state, $object) {
+function hook_islandora_basic_collection_build_manage_object(array $form_state, AbstractObject $object) {
   // Example implementation.
   $form_state['manage_collection_object']['manage_obj_lock'] = array(
     '#id' => 'manage-obj-lock',
@@ -150,6 +150,8 @@ function hook_islandora_basic_collection_query_backends() {
   $a_callable = function ($object, $page, $limit) {
     // Do something to get the total number of objects and this page return
     // them.
+    $total = $page * 2;
+    $pids = array('one:pid', 'two:pid');
     return array($total, $pids);
   };
   return array(
@@ -181,5 +183,7 @@ function hook_islandora_basic_collection_query_backends() {
 function callback_islandora_basic_collection_query_backends(AbstractObject $object, $page, $limit) {
   // Do something to get the total number of objects and this page return
   // them.
+  $total = $page * 2;
+  $pids = array('one:pid', 'two:pid');
   return array($total, $pids);
 }
