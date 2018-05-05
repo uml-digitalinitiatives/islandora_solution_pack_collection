@@ -8,7 +8,7 @@
 /**
  * Tests removing a rels entry between a shared object and two collections.
  */
-class IslandoraBasicCollectionPurgeShareCollectionTestCase extends IslandoraCollectionWebTestCase {
+class IslandoraBasicCollectionPurgeShareCollectionTestCase extends IslandoraBasicCollectionWebTestCase {
 
   /**
    * Get test information.

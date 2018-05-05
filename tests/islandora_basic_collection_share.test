@@ -8,7 +8,7 @@
 /**
  * Test share a collection.
  */
-class IslandoraBasicCollectionShareCollectionTestCase extends IslandoraCollectionWebTestCase {
+class IslandoraBasicCollectionShareBasicCollectionTestCase extends IslandoraBasicCollectionWebTestCase {
 
   /**
    * Get test information.

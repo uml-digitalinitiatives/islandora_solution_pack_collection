@@ -11,7 +11,7 @@
 /**
  * Tests various general permissions.
  */
-class IslandoraBasicCollectionUsagePermissionsTestCase extends IslandoraCollectionWebTestCase {
+class IslandoraBasicCollectionUsagePermissionsTestCase extends IslandoraBasicCollectionWebTestCase {
 
   /**
    * Get test information.

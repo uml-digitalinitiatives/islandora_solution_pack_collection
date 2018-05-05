@@ -8,7 +8,7 @@
 /**
  * Test replace a datastream on a collection.
  */
-class IslandoraBasicCollectionReplaceDatastreamTestCase extends IslandoraCollectionWebTestCase {
+class IslandoraBasicBasicCollectionReplaceDatastreamTestCase extends IslandoraBasicCollectionWebTestCase {
 
   /**
    * Get test information.

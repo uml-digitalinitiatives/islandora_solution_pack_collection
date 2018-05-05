@@ -8,7 +8,7 @@
 /**
  * Tests ingesting a collection.
  */
-class IslandoraBasicCollectionIngestTestCase extends IslandoraCollectionWebTestCase {
+class IslandoraBasicCollectionIngestTestCase extends IslandoraBasicCollectionWebTestCase {
 
   /**
    * Get test information.

@@ -8,7 +8,7 @@
 /**
  * Test migrate collection.
  */
-class IslandoraBasicCollectionMigrateCollectionTestCase extends IslandoraCollectionWebTestCase {
+class IslandoraBasicCollectionMigrateBasicCollectionTestCase extends IslandoraBasicCollectionWebTestCase {
 
   /**
    * Get test information.
