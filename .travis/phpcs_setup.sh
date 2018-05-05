@@ -1,6 +1,7 @@
 #!/bin/bash
 
 if [ -n "${TRAVIS_PHP_VERSION}" ]; then
+  echo "PHP VERSION is ${TRAVIS_PHP_VERSION}"
   if [ "${TRAVIS_PHP_VERSION}" != "5.3.3" ]; then
     # Setup phpcs and drupal sniffs.
     mkdir $TOOLS_DIR
