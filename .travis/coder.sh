@@ -1,4 +1,4 @@
-!#/bin/bash
+#!/bin/bash
 
 if [ -n "${TRAVIS_PHP_VERSION}" ]; then
   if [ "${TRAVIS_PHP_VERSION}" == "5.3.3" ]; then
