@@ -569,6 +569,27 @@ function islandora_basic_collection_validate_form(array $form_state) {
 
   if ($clicked_button == 'submit_all') {
     $source_collection = $form_state['collection'];
+    return islandora_basic_collection_test_cyclic_migration($new_collection, $source_collection);
+  }
+  $children = array_keys(array_filter($form_state['values']['children']));
+  return islandora_basic_collection_test_cyclic_migration($new_collection, NULL, $children);
+}
+
+/**
+ * @param string $new_collection
+ *   The PID of the collection to migrate to.
+ * @param string|null $source_collection
+ *   The PID of the original collection (if migrating all children) or null.
+ * @param array $children
+ *   The array of a subset of children. Requires $source_collection = NULL.
+ *
+ * @return bool
+ *   Whether we are NOT migrating a collection to itself.
+ *
+ */
+function islandora_basic_collection_test_cyclic_migration($new_collection, $source_collection = NULL,
+                                                          array $children = array()) {
+  if (!is_null($source_collection)) {
     $query = <<<EOT
 PREFIX fedora-rels-ext: <info:fedora/fedora-system:def/relations-external#>
 SELECT ?object WHERE {
@@ -580,11 +601,5 @@ EOT;
     $num_results = $connection->repository->ri->countQuery($query, 'sparql');
     return ($num_results <= 0);
   }
-  else {
-    $children = array_keys(array_filter($form_state['values']['children']));
-    if (array_intersect($children, array($new_collection))) {
-      return FALSE;
-    }
-  }
-  return TRUE;
+  return (count(array_intersect($children, array($new_collection))) == 0);
 }
